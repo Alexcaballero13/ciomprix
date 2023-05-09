@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { AgregarTask } from "../../redux/Actions"
+import { AgregarTask, buscarTask, buscarTaskcategoria, filtroEstado } from "../../redux/Actions"
 import Task from "../Tasks/Task"
 
 
@@ -15,8 +15,13 @@ const validate = ({nombre, descripcion})=>{
 
 const HomePage = () =>{
 
+
     const dispatch = useDispatch();
     const tareas = useSelector(state => state.Tasks)
+
+
+    const [Taskname, setTaskname] = useState('')
+    const [Taskcategoria, setTaskcategoria] = useState('')
     const [form, setForm] = useState({
         nombre: '',
         categoria: '',
@@ -57,10 +62,38 @@ const HomePage = () =>{
         })
     }
 
+    const handleFilterbyName = (event) =>{
+        const value = event.target.value
+        setTaskname(value)
+    }
+
+    const handleFilterbycategoria = (event) =>{
+        const value = event.target.value
+        setTaskcategoria(value)
+    }
+
+    const handleFilterbyEstado = (event) =>{
+        dispatch(filtroEstado(event.target.value))
+    }
 
     return(
 
         <div>
+            <div>
+                <label>Filtro Nombre:</label>
+                <input type="text" value={Taskname} onChange={handleFilterbyName}/>
+                <button onClick={()=>dispatch(buscarTask(Taskname))}>Buscar</button>
+
+                <label>Filtro Categoria:</label>
+                <input type="text" value={Taskcategoria} onChange={handleFilterbycategoria}/>
+                <button onClick={()=>dispatch(buscarTaskcategoria(Taskcategoria))}>Buscar</button>
+
+                <label>Filtro estado:</label>
+                <select name="select" onChange={handleFilterbyEstado}>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Finalizada">Finalizada</option>
+                </select>
+            </div>
             <div>
             {tareas?.map(tarea =>{
                 return <Task
