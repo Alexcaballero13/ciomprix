@@ -3,6 +3,7 @@ import { borrarTarea, modificarTarea } from "../../redux/Actions"
 import { useDispatch } from 'react-redux'
 
 const Task = ({ nombre, categoria, estado, descripcion }) => {
+    
     const dispatch = useDispatch()
     const [isChecked, setIsChecked] = useState(false);
     const [editar, setEditar] = useState(false)
@@ -65,7 +66,7 @@ const Task = ({ nombre, categoria, estado, descripcion }) => {
     }
 
     return (
-        
+
         <div className={cardClasses}>
             <div className="card m-2">
                 <div className="card-body bg-light">
