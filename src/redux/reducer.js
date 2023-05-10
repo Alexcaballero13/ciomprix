@@ -25,20 +25,20 @@ const tasksReducer = (state = initialState, action) => {
                 Tasks: updatedTasks1
             };
 
-            case UPDATETASK:
-                const taskToUpdateIndex = state.Tasks.findIndex(obj => obj.nombre === action.payload.nombre);
-                if (taskToUpdateIndex === -1) {
+        case UPDATETASK:
+            const taskToUpdateIndex = state.Tasks.findIndex(obj => obj.nombre === action.payload.nombre);
+            if (taskToUpdateIndex === -1) {
 
-                    return state;
-                }
-                const updatedTask = { ...state.Tasks[taskToUpdateIndex], ...action.payload };
-                const updatedTasks = [...state.Tasks];
-                updatedTasks[taskToUpdateIndex] = updatedTask;
-                localStorage.setItem('Tasks', JSON.stringify(updatedTasks));
-                return {
-                    ...state,
-                    Tasks: updatedTasks
-                };
+                return state;
+            }
+            const updatedTask = { ...state.Tasks[taskToUpdateIndex], ...action.payload };
+            const updatedTasks = [...state.Tasks];
+            updatedTasks[taskToUpdateIndex] = updatedTask;
+            localStorage.setItem('Tasks', JSON.stringify(updatedTasks));
+            return {
+                ...state,
+                Tasks: updatedTasks
+            };
 
         case SEARCHTASK:
             const filtered = state.Tasks.filter(obj => obj.nombre === action.payload);

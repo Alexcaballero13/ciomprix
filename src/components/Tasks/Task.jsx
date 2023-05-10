@@ -3,7 +3,7 @@ import { borrarTarea, modificarTarea } from "../../redux/Actions"
 import { useDispatch } from 'react-redux'
 
 const Task = ({ nombre, categoria, estado, descripcion }) => {
-    
+
     const dispatch = useDispatch()
     const [isChecked, setIsChecked] = useState(false);
     const [editar, setEditar] = useState(false)
