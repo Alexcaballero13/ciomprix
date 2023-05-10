@@ -4,16 +4,16 @@ import { AgregarTask, buscarTask, buscarTaskcategoria, filtroEstado } from "../.
 import Task from "../Tasks/Task"
 
 
-const validate = ({nombre, descripcion})=>{
-    const errors ={}
-    
-    if (nombre.length > 25) errors.nombre = 'You exceeded Max. Number of characters' 
-    if (descripcion.length > 150) errors.descripcion = 'You exceeded Max. Number of characters'
-    
-    return errors
-    }
+const validate = ({ nombre, descripcion }) => {
+    const errors = {}
 
-const HomePage = () =>{
+    if (nombre.length > 25) errors.nombre = 'You exceeded Max. Number of characters'
+    if (descripcion.length > 150) errors.descripcion = 'You exceeded Max. Number of characters'
+
+    return errors
+}
+
+const HomePage = () => {
 
 
     const dispatch = useDispatch();
@@ -26,14 +26,14 @@ const HomePage = () =>{
         nombre: '',
         categoria: '',
         estado: 'Pendiente',
-        descripcion:''
+        descripcion: ''
     })
-    
+
     const [errors, setErrors] = useState({
         nombre: '',
         categoria: '',
         estado: 'Pendiente',
-        descripcion:''
+        descripcion: ''
     })
 
     const handleInputform = (event) => {
@@ -53,74 +53,100 @@ const HomePage = () =>{
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(AgregarTask({nombre: form.nombre, categoria: form.categoria, estado: form.estado, descripcion: form.descripcion}))
+        dispatch(AgregarTask({ nombre: form.nombre, categoria: form.categoria, estado: form.estado, descripcion: form.descripcion }))
         setForm({
             nombre: '',
             categoria: '',
             estado: 'Pendiente',
-            descripcion:''
+            descripcion: ''
         })
     }
 
-    const handleFilterbyName = (event) =>{
+    const handleFilterbyName = (event) => {
         const value = event.target.value
         setTaskname(value)
     }
 
-    const handleFilterbycategoria = (event) =>{
+    const handleFilterbycategoria = (event) => {
         const value = event.target.value
         setTaskcategoria(value)
     }
 
-    const handleFilterbyEstado = (event) =>{
+    const handleFilterbyEstado = (event) => {
         dispatch(filtroEstado(event.target.value))
     }
 
-    return(
+    return (
 
         <div>
-            <div>
-                <label>Filtro Nombre:</label>
-                <input type="text" value={Taskname} onChange={handleFilterbyName}/>
-                <button onClick={()=>dispatch(buscarTask(Taskname))}>Buscar</button>
+            <div class="container my-5">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="text-center display-2 fw-bold">Lista de tareas</h1>
+                    </div>
+                </div>
 
-                <label>Filtro Categoria:</label>
-                <input type="text" value={Taskcategoria} onChange={handleFilterbycategoria}/>
-                <button onClick={()=>dispatch(buscarTaskcategoria(Taskcategoria))}>Buscar</button>
+            </div>
+            <div className="d-flex justify-content-center mx-auto">
+                <div className="p-4">
+                    <div className="d-flex align-items-center mb-3">
+                        <label className="me-2">Filtro Nombre:</label>
+                        <input type="text" value={Taskname} onChange={handleFilterbyName} className="form-control me-2" />
+                        <button onClick={() => dispatch(buscarTask(Taskname))} className="btn btn-primary">Buscar</button>
+                    </div>
 
-                <label>Filtro estado:</label>
-                <select name="select" onChange={handleFilterbyEstado}>
-                    <option value="Pendiente">Pendiente</option>
-                    <option value="Finalizada">Finalizada</option>
-                </select>
+                    <div className="d-flex align-items-center mb-3">
+                        <label className="me-2">Filtro Categoria:</label>
+                        <input type="text" value={Taskcategoria} onChange={handleFilterbycategoria} className="form-control me-2" />
+                        <button onClick={() => dispatch(buscarTaskcategoria(Taskcategoria))} className="btn btn-primary">Buscar</button>
+                    </div>
+
+                    <div className="d-flex align-items-center">
+                        <label className="me-2">Filtro estado:</label>
+                        <select name="select" onChange={handleFilterbyEstado} className="form-select me-2">
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Finalizada">Finalizada</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div>
-            {tareas?.map(tarea =>{
-                return <Task
-                nombre={tarea.nombre}
-                categoria ={tarea.categoria}
-                estado ={tarea.estado}
-                descripcion={tarea.descripcion}/>
-            })}
+            <div className="container-fluid">
+                <div className="mx-auto m-5 d-flex flex-wrap justify-content-center align-items-center">
+                    {tareas?.map(tarea => {
+                        return (
+                            <div className="col-12 col-md-4 mb-3">
+                                <Task
+                                    nombre={tarea.nombre}
+                                    categoria={tarea.categoria}
+                                    estado={tarea.estado}
+                                    descripcion={tarea.descripcion} />
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
-            <h1>Agrega una Tarea</h1>
-            <form onSubmit={handleSubmit}>
-            <div> 
-                <label htmlFor="nombre">Nombre: </label>
-                <input type="text" name="nombre" value={form.nombre} onChange={handleInputform}/> {errors.nombre? <p>{errors.nombre}</p>:""}
-            </div>
-            <div> 
-                <label htmlFor="categoria">Categoria: </label>
-                <input type="text" name="categoria" value={form.categoria} onChange={handleInputform}/>
-            </div>
-            <div> 
-                <label htmlFor="descripcion">Descripcion: </label>
-                <input type="text" name="descripcion" value={form.descripcion} onChange={handleInputform}/> {errors.descripcion? <p>{errors.descripcion}</p>:""}
-            </div>
-            <div>
-                <button type="submit" disabled={errors.nombre||errors.categoria||errors.descripcion||!form.nombre||!form.categoria||!form.descripcion}>Crear Tarea</button>
-            </div>
-            </form>
+            <div class="container">
+  <h1>Agrega una Tarea</h1>
+  <form onSubmit={handleSubmit}>
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre:</label>
+      <input type="text" name="nombre" value={form.nombre} onChange={handleInputform} class="form-control" />
+      {errors.nombre ? <p class="form-text">{errors.nombre}</p> : ""}
+    </div>
+    <div class="mb-3">
+      <label for="categoria" class="form-label">Categoria:</label>
+      <input type="text" name="categoria" value={form.categoria} onChange={handleInputform} class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripcion:</label>
+      <input type="text" name="descripcion" value={form.descripcion} onChange={handleInputform} class="form-control" />
+      {errors.descripcion ? <p class="form-text">{errors.descripcion}</p> : ""}
+    </div>
+    <div class="mb-3">
+      <button type="submit" disabled={errors.nombre || errors.categoria || errors.descripcion || !form.nombre || !form.categoria || !form.descripcion} class="btn btn-primary">Crear Tarea</button>
+    </div>
+  </form>
+</div>
         </div>
     )
 }
