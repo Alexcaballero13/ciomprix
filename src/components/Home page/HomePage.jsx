@@ -78,6 +78,9 @@ const HomePage = () => {
 
     return (
 
+        <body className="fondo">
+            
+        
         <div>
             <div class="container my-5">
                 <div class="row">
@@ -91,19 +94,19 @@ const HomePage = () => {
                 <div className="p-4">
                     <div className="d-flex align-items-center mb-3">
                         <label className="me-2">Filtro Nombre:</label>
-                        <input type="text" value={Taskname} onChange={handleFilterbyName} className="form-control me-2" />
+                        <input type="text" value={Taskname} onChange={handleFilterbyName} className="form-control me-2 bg-light" />
                         <button onClick={() => dispatch(buscarTask(Taskname))} className="btn btn-primary">Buscar</button>
                     </div>
 
                     <div className="d-flex align-items-center mb-3">
                         <label className="me-2">Filtro Categoria:</label>
-                        <input type="text" value={Taskcategoria} onChange={handleFilterbycategoria} className="form-control me-2" />
+                        <input type="text" value={Taskcategoria} onChange={handleFilterbycategoria} className="form-control me-2 bg-light" />
                         <button onClick={() => dispatch(buscarTaskcategoria(Taskcategoria))} className="btn btn-primary">Buscar</button>
                     </div>
 
                     <div className="d-flex align-items-center">
                         <label className="me-2">Filtro estado:</label>
-                        <select name="select" onChange={handleFilterbyEstado} className="form-select me-2">
+                        <select name="select" onChange={handleFilterbyEstado} className="form-select me-2 bg-light">
                             <option value="Pendiente">Pendiente</option>
                             <option value="Finalizada">Finalizada</option>
                         </select>
@@ -126,28 +129,36 @@ const HomePage = () => {
                 </div>
             </div>
             <div class="container">
-  <h1>Agrega una Tarea</h1>
-  <form onSubmit={handleSubmit}>
-    <div class="mb-3">
-      <label for="nombre" class="form-label">Nombre:</label>
-      <input type="text" name="nombre" value={form.nombre} onChange={handleInputform} class="form-control" />
-      {errors.nombre ? <p class="form-text">{errors.nombre}</p> : ""}
-    </div>
-    <div class="mb-3">
-      <label for="categoria" class="form-label">Categoria:</label>
-      <input type="text" name="categoria" value={form.categoria} onChange={handleInputform} class="form-control" />
-    </div>
-    <div class="mb-3">
-      <label for="descripcion" class="form-label">Descripcion:</label>
-      <input type="text" name="descripcion" value={form.descripcion} onChange={handleInputform} class="form-control" />
-      {errors.descripcion ? <p class="form-text">{errors.descripcion}</p> : ""}
-    </div>
-    <div class="mb-3">
-      <button type="submit" disabled={errors.nombre || errors.categoria || errors.descripcion || !form.nombre || !form.categoria || !form.descripcion} class="btn btn-primary">Crear Tarea</button>
-    </div>
-  </form>
-</div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-8 col-sm-12">
+                        <h1>Agrega una Tarea</h1>
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-3">
+                                <label htmlFor="nombre" className="form-label">Nombre:</label>
+                                <input type="text" name="nombre" className="form-control bg-light" value={form.nombre} onChange={handleInputform} />
+                                {errors.nombre ? <p>{errors.nombre}</p> : ""}
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="categoria" className="form-label">Categoria:</label>
+                                <input type="text" name="categoria" className="form-control bg-light" value={form.categoria} onChange={handleInputform} />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="descripcion" className="form-label">Descripcion:</label>
+                                <input type="text" name="descripcion" className="form-control bg-light" value={form.descripcion} onChange={handleInputform} />
+                                {errors.descripcion ? <p>{errors.descripcion}</p> : ""}
+                            </div>
+                            <div>
+                                <button type="submit" className="btn btn-primary" disabled={errors.nombre || errors.categoria || errors.descripcion || !form.nombre || !form.categoria || !form.descripcion}>Crear Tarea</button>
+                            </div>
+                        </form>
+                        <div className="mt-3"></div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        
+</body>
     )
 }
 
